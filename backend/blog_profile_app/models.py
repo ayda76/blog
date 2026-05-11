@@ -21,7 +21,7 @@ class Profile(models.Model):
     address    = models.TextField(blank=True, null=True)
     
     def __str__(self) :
-        return f"{self.firstname or ''} {self.lastname or ''}".strip()
+        return self.user.username
     
     def get_user_jwt(self,request):
         

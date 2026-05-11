@@ -2,7 +2,7 @@ from django.db import models
 from blog_profile_app.models import Profile
 # Create your models here.
 
-class Blog(models.Model):
+class Post(models.Model):
     title=models.TextField()
     description=models.TextField()
     image=models.FileField(upload_to='media/',blank=True,null=True)
