@@ -25,8 +25,8 @@ from rest_framework import permissions
 from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("account/", include("blog_profile_app.api.urls")),
-    path("doctor/", include("blog_post_app.api.urls")),
+    path("profile/", include("blog_profile_app.api.urls")),
+    path("post/", include("blog_post_app.api.urls")),
 
     
     path('auth/', include('djoser.urls')),

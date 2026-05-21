@@ -13,6 +13,27 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model= Profile
         fields=['id','user','firstname','lastname','email']
+        
+    def validate(self, attrs):
+
+        request = self.context.get('request')
+
+        if not request:
+            return attrs
+
+        user = request.user
+
+        if not self.instance:
+
+            if Profile.objects.filter(
+                user=user
+            ).exists():
+
+                raise serializers.ValidationError(
+                    'this user already has a profile'
+                )
+
+        return attrs
     
     
     
