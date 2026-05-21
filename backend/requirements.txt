@@ -10,6 +10,7 @@ argon2-cffi-bindings==21.2.0
 asgiref==3.7.2
 attrs==25.4.0
 billiard==4.2.0
+black==26.5.1
 celery==5.3.6
 certifi==2023.7.22
 cffi==2.0.0
@@ -65,6 +66,7 @@ fastapi==0.121.2
 fastapi-cli==0.0.16
 fastapi-cloud-cli==0.5.2
 fastar==0.8.0
+flake8==7.3.0
 fonttools==4.55.8
 fpdf==1.7.2
 frozenlist==1.8.0

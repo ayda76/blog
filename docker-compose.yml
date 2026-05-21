@@ -1,0 +1,171 @@
+version: "3.9"
+
+services:
+  # =====================
+  # PostgreSQL
+  # =====================
+  blog_db:
+    image: postgres:17
+    container_name: blog-db
+    restart: always
+    env_file:
+      - ./backend/.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+      - ./db_blog.sql:/docker-entrypoint-initdb.d/db_blog.sql
+    ports:
+      - "5432:5432"
+
+  blog_postgres_exporter:
+    image: prometheuscommunity/postgres-exporter
+    container_name: blog_postgres_exporter
+    env_file:
+      - ./backend/.env
+    environment:
+      DATA_SOURCE_NAME: >
+        postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?  sslmode=disable
+    ports:
+      - "9187:9187"
+    depends_on:
+      - blog_db
+
+  # =====================
+  # Redis
+  # =====================
+  # blog_redis:
+  #   image: redis:7-alpine
+  #   container_name: blog_redis
+  #   restart: always
+  #   ports:
+  #     - "6379:6379"
+
+  # prometheus:
+  #   image: prom/prometheus:v2.54.1
+  #   container_name: prometheus
+  #   volumes:
+  #     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - "9090:9090"
+
+  # grafana:
+  #   image: grafana/grafana:11.2.0
+  #   container_name: grafana
+  #   ports:
+  #     - "3030:3000"
+  #   environment:
+  #     GF_SECURITY_ADMIN_USER: admin
+  #     GF_SECURITY_ADMIN_PASSWORD: admin
+  #   depends_on:
+  #     - prometheus
+  # =====================
+  # Django Backend
+  # =====================
+  blog_backend:
+    container_name: blog_backend
+    build:
+      context: ./backend
+    command: >
+      sh -c "
+      python manage.py migrate --noinput &&
+      python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=blog.settings
+    volumes:
+      - ./backend:/backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - blog_db
+      # - blog_redis
+      # - prometheus
+  # blog_rabbitmq:
+  #   image: rabbitmq:3-management
+  #   container_name: blog_rabbitmq
+  #   restart: always
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   environment:
+  #     RABBITMQ_DEFAULT_USER: admin
+  #     RABBITMQ_DEFAULT_PASS: admin
+  # =====================
+  # Celery Worker
+  # =====================
+  # blog_celery:
+  #   container_name: blog_celery_worker
+  #   build:
+  #     context: ./backend
+  #   working_dir: /backend
+  #   command: sh -c "cd /backend && celery -A blog worker --loglevel=info"
+  #   volumes:
+  #     - ./backend:/backend
+  #   env_file:
+  #     - ./backend/.env
+
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE=blog.settings
+  #     - PYTHONPATH=/backend
+  #   depends_on:
+  #     - blog_rabbitmq
+  #     - blog_redis
+  # =====================
+  # Celery Beat
+  # =====================
+  # blog_celery_beat:
+  #   container_name: blog_celery_beat
+  #   build:
+  #     context: ./backend
+  #   working_dir: /backend
+  #   command: sh -c "cd /backend &&  celery -A blog beat --loglevel=info"
+  #   volumes:
+  #     - ./backend:/backend
+  #   env_file:
+  #     - ./backend/.env
+
+  #   environment:
+  #     - DJANGO_SETTINGS_MODULE=blog.settings
+  #     - PYTHONPATH=/backend
+  #   depends_on:
+  #     - blog_rabbitmq
+  #     - blog_redis
+
+  # # =====================
+  # # Flower (Celery Monitor)
+  # # =====================
+  # blog_flower:
+  #   image: mher/flower
+  #   container_name: blog_flower
+  #   ports:
+  #     - "5555:5555"
+  #   environment:
+  #     - FLOWER_PORT=5555
+  #     - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+  #   depends_on:
+  #     - blog_rabbitmq
+  #     - blog_celery
+
+  # =====================
+  # Frontend (Next.js / Vite)
+  # =====================
+  # blog_frontend:
+  #   container_name: blog_frontend
+  #   build:
+  #     context: ./frontend
+  #   command: npm run dev -- --host
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   env_file:
+  #     - ./frontend/.env
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true
+  #   depends_on:
+  #     - blog_backend
+
+volumes:
+  pgdata:
