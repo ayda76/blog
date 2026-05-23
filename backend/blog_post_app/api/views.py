@@ -27,11 +27,12 @@ class PostViewSet(viewsets.ModelViewSet):
     my_tags = ["Post"]
 
     def perform_create(self, serializer):
-        
-        profile_login=Profile.get_user_jwt(self,self.request)
-        print(f"login:{profile_login}")
-        post_instance=serializer.save(profile_related=profile_login)
-        return Response(post_instance)        
+        try:    
+            profile_login=Profile.get_user_jwt(self,self.request)
+            post_instance=serializer.save(profile_related=profile_login)
+            return Response(post_instance)        
+        except:
+            raise ValidationError({"detail":"login problem"})
         
     
 
@@ -41,4 +42,11 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     pagination_class=None
     my_tags = ["Post"]
+    def perform_create(self, serializer):
+        try:    
+            profile_login=Profile.get_user_jwt(self,self.request)
+            comment_instance=serializer.save(profile_commented=profile_login)
+            return Response(comment_instance)        
+        except:
+            raise ValidationError({"detail":"login problem"})
     
