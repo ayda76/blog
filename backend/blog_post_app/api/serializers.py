@@ -6,7 +6,7 @@ class PostSerializer(serializers.ModelSerializer):
     profile_related=ProfileSerializer(read_only=True)
     class Meta:
         model= Post
-        fields=['id','profile_related','title','description']
+        fields=['id','profile_related','title','description','status_post']
         
         
 class CommentSerializer(serializers.ModelSerializer):

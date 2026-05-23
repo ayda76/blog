@@ -4,12 +4,12 @@ from blog_profile_app.models import Profile
 
 class StatusPost(models.TextChoices):
     
-    PENDING = "draft", "draft"      
-    ACCEPTED = "posted", "posted"     
+    DRAFT = "draft", "draft"      
+    POSTED= "posted", "posted"     
 
 
 class Post(models.Model):
-    status_post=models.CharField(default='draft',max_length=10,choices=StatusPost.choices)
+    status_post=models.CharField(default=StatusPost.DRAFT,max_length=10,choices=StatusPost.choices)
     title=models.TextField()
     description=models.TextField()
     image=models.FileField(upload_to='media/',blank=True,null=True)
