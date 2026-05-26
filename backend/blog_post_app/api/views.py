@@ -14,6 +14,7 @@ from rest_framework.exceptions import ValidationError, NotFound
 from datetime import datetime, timedelta, date
 from rest_framework.response import Response
 
+from .services import add_profile
 from blog_profile_app.models import Profile
 from ..models import (Post,Comment)
 from .serializers import (PostSimpleSerializer,
@@ -37,12 +38,8 @@ class PostViewSet(viewsets.ModelViewSet):
             return PostGetSerializer
         
     def perform_create(self, serializer):
-        try:    
-            profile_login=Profile.get_user_jwt(self,self.request)
-            post_instance=serializer.save(profile_related=profile_login)
-            return Response(post_instance)        
-        except:
-            raise ValidationError({"detail":"login problem"})
+        instance=add_profile(self,serializer)
+        return instance
         
     
 
@@ -60,10 +57,7 @@ class CommentViewSet(viewsets.ModelViewSet):
             return CommentGetSerializer
         
     def perform_create(self, serializer):
-        try:    
-            profile_login=Profile.get_user_jwt(self,self.request)
-            comment_instance=serializer.save(profile_commented=profile_login)
-            return Response(comment_instance)        
-        except:
-            raise ValidationError({"detail":"login problem"})
+        instance=add_profile(self,serializer)
+        return instance
+        
     

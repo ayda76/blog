@@ -6,13 +6,13 @@ class CommentSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= Comment
-        fields=['id','post_commented','profile_commented','text']       
+        fields=['id','post_commented','text']       
 
 class PostSimpleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model= Post
-        fields=['id','profile_related','title','description','status_post']
+        fields=['id','title','description']
            
 
 class PostGetSerializer(serializers.ModelSerializer):

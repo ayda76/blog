@@ -25,7 +25,7 @@ class TestPostSerializer:
         
     def test_invalid_partial_update(self):
         post=PostFactory()
-        serializer=PostSimpleSerializer(post,data={'profile_related':None},partial=True)
+        serializer=PostSimpleSerializer(post,data={'title':None},partial=True)
      
         assert  serializer.is_valid() == False
         print(f"serializer errors:::{serializer.errors}")
@@ -51,10 +51,6 @@ class TestCommentSerializer:
     def test_invalid_partial_update(self):
         comment=CommentFactory()
         serializer=CommentSimpleSerializer(comment,data={'post_commented':'test'},partial=True)
-     
-        assert  serializer.is_valid() == False
-        print(f"serializer errors:::{serializer.errors}")
-        serializer=CommentSimpleSerializer(comment,data={'profile_commented':700},partial=True)
      
         assert  serializer.is_valid() == False
         print(f"serializer errors:::{serializer.errors}")
