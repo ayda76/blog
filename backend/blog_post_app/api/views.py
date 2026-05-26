@@ -14,18 +14,28 @@ from rest_framework.exceptions import ValidationError, NotFound
 from datetime import datetime, timedelta, date
 from rest_framework.response import Response
 
-from ..models import (Post,Comment)
-from .serializers import (PostSerializer,CommentSerializer)
 from blog_profile_app.models import Profile
+from ..models import (Post,Comment)
+from .serializers import (PostSimpleSerializer,
+                          CommentSimpleSerializer,
+                          PostGetSerializer,
+                          CommentGetSerializer)
+
 
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
+
     pagination_class=None
     my_tags = ["Post"]
-
+    
+    def get_serializer_class(self):
+        if self.request.method in ['POST','PUT','PATCH']:
+            return PostSimpleSerializer
+        else:
+            return PostGetSerializer
+        
     def perform_create(self, serializer):
         try:    
             profile_login=Profile.get_user_jwt(self,self.request)
@@ -39,9 +49,16 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+
     pagination_class=None
     my_tags = ["Post"]
+    
+    def get_serializer_class(self):
+        if self.request.method in ['POST','PUT','PATCH']:
+            return CommentSimpleSerializer
+        else:
+            return CommentGetSerializer
+        
     def perform_create(self, serializer):
         try:    
             profile_login=Profile.get_user_jwt(self,self.request)
