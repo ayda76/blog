@@ -17,7 +17,7 @@ class TestProfileSerializer():
         profile=ProfileFactory()
         serializer_data=ProfileSerializer(profile).data
         
-        assert serializer_data['email'] == 'test@test.com'
+        assert serializer_data['email'] == profile.email
         assert serializer_data['user'] is not None
         assert serializer_data['user']['username'] == profile.user.username
         

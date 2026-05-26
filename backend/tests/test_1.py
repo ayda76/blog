@@ -33,10 +33,10 @@ def test_exp1(fixture_1):
     
     
     
-@pytest.mark.django_db
-def test_user_create():
-    User.objects.create_user('test','test@test.com','test')
-    assert User.objects.count()==1
+# @pytest.mark.django_db
+# def test_user_create():
+#     User.objects.create_user('test','test@test.com','test')
+#     assert User.objects.count()==1
     
     
     

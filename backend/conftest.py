@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from pytest_factoryboy import register
 from tests.factories import UserFactory
 from tests.factories_profile import ProfileFactory
-from tests.factories_post import PostFactory
+from tests.factories_post import (PostFactory,CommentFactory)
 
 @pytest.fixture()
 def user_1(db):
@@ -54,3 +54,5 @@ register(UserFactory)
 
 register(ProfileFactory)
 register(PostFactory)
+
+register(CommentFactory)

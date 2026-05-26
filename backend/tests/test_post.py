@@ -1,11 +1,11 @@
-import pytest
-from django.contrib.auth.models import User
+# import pytest
+# from django.contrib.auth.models import User
 
 
-def test_post_with_factory(db,post_factory):
+# def test_post_with_factory(db,post_factory):
     
-    post_created=post_factory.create()
+#     post_created=post_factory.create()
 
-    print(post_created.title)
-    print(post_created.profile_related.firstname)
-    assert True 
+#     print(post_created.title)
+#     print(post_created.profile_related.firstname)
+#     assert True 

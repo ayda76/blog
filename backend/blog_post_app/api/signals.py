@@ -9,3 +9,5 @@ def modify_post_status_posted(sender,instance,created,**kwargs):
     if created:
         Post.objects.filter(id=instance.id).update(status_post=StatusPost.POSTED)
 #we do not use instance and save inorder to prevent loops    
+
+
