@@ -4,7 +4,7 @@ from tests.factories_profile import ProfileFactory
 from tests.factories_post import PostFactory
 from tests.integrationtest.post_tests.test_post_creation import get_tokens_for_user
 
-
+# SUCCESS TESTS
 @pytest.mark.django_db
 def test_post_patch():
     client=APIClient()
@@ -24,7 +24,7 @@ def test_post_patch():
     assert post.title == 'new test title'
     
     
-
+# AUTH TESTS
 @pytest.mark.django_db
 def test_post_patch_not_logged_in():
     client=APIClient()
@@ -35,6 +35,7 @@ def test_post_patch_not_logged_in():
     assert response.status_code == 401
     assert post.title == 'original'
     
+#PERMISSION TEST    
 @pytest.mark.django_db
 def test_post_patch_with_wrong_profile():
     client=APIClient()

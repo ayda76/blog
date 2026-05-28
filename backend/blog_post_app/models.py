@@ -23,10 +23,10 @@ class Post(models.Model):
     
 class Comment(models.Model):
     post_commented=models.ForeignKey(Post,related_name='comment_post',on_delete=models.CASCADE,null=True)
-    profile_commented=models.ForeignKey(Profile,related_name='comment_profile',on_delete=models.CASCADE)
+    profile_related=models.ForeignKey(Profile,related_name='comment_profile',on_delete=models.CASCADE)
     text=models.TextField()
     created_date=models.DateTimeField(auto_now_add=True)
     updated_date=models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.profile_commented.firstname
+        return self.profile_related.firstname

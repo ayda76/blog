@@ -5,7 +5,7 @@ from tests.factories_post import PostFactory
 from tests.integrationtest.post_tests.test_post_creation import get_tokens_for_user
 from blog_post_app.models import (Post,StatusPost)
 
-
+# SUCCESS TESTS
 @pytest.mark.django_db
 def test_post_delete_with_jwt_auth():
     
@@ -24,6 +24,7 @@ def test_post_delete_with_jwt_auth():
     
     assert Post.objects.count() == 0
     
+# AUTH TESTS
 @pytest.mark.django_db
 def test_post_delete_not_login():
     

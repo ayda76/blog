@@ -21,6 +21,6 @@ class CommentFactory(factory.django.DjangoModelFactory):
         model=Comment
         
     text=factory.Faker("text")
-    profile_commented=factory.SubFactory(ProfileFactory)
+    profile_related=factory.SubFactory(ProfileFactory)
     post_commented=factory.SubFactory(PostFactory)
     

@@ -4,7 +4,7 @@ from tests.factories_profile import ProfileFactory
 from tests.factories_post import PostFactory
 from tests.integrationtest.post_tests.test_post_creation import get_tokens_for_user
 
-
+# SUCCESS TESTS
 @pytest.mark.django_db
 def test_post_get_all():
     client=APIClient()

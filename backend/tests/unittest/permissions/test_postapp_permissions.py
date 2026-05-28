@@ -148,7 +148,7 @@ def test_comment_permission_with_profile(mock_get_user_jwt):
     request.method="PATCH"
     
     obj=MagicMock()
-    obj.profile_commented.id=1
+    obj.profile_related.id=1
     result=permission.has_object_permission(request,None,obj)
     
     assert result==True
@@ -163,7 +163,7 @@ def test_comment_permission_without_profile(mock_get_user_jwt):
     request.method="PATCH"
     
     obj=MagicMock()
-    obj.profile_commented.id=2
+    obj.profile_related.id=2
     result=permission.has_object_permission(request,None,obj)
     
     assert result==False

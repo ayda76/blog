@@ -23,12 +23,12 @@ class TestCommentModel:
         
     def test_comment_str(self):
         comment=CommentFactory()
-        assert str(comment)==comment.profile_commented.firstname
+        assert str(comment)==comment.profile_related.firstname
         
     def test_post_profile_relations(self):
         post=PostFactory()
         profile=ProfileFactory()
-        comment=CommentFactory(post_commented=post,profile_commented=profile)
+        comment=CommentFactory(post_commented=post,profile_related=profile)
         
         assert comment.post_commented.title==post.title
-        assert comment.profile_commented.firstname==profile.firstname
+        assert comment.profile_related.firstname==profile.firstname

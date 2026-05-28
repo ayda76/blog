@@ -23,8 +23,8 @@ class PostGetSerializer(serializers.ModelSerializer):
         fields=['id','profile_related','title','description','status_post','comment_post']
         
 class CommentGetSerializer(serializers.ModelSerializer):
-    profile_commented=ProfileSerializer(read_only=True)
+    profile_related=ProfileSerializer(read_only=True)
     post_commented=PostGetSerializer(read_only=True)
     class Meta:
         model= Comment
-        fields=['id','post_commented','profile_commented','text']            
+        fields=['id','post_commented','profile_related','text']            

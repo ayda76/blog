@@ -37,7 +37,7 @@ class TestCommentSerializer:
         serializer_data=CommentGetSerializer(comment).data
         
         assert serializer_data['post_commented']['title']==comment.post_commented.title
-        assert serializer_data['profile_commented']['email']==comment.profile_commented.email
+        assert serializer_data['profile_related']['email']==comment.profile_related.email
         
     def test_partial_update(self):
         comment=CommentFactory()

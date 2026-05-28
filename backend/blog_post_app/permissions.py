@@ -54,4 +54,4 @@ class Comment_Permissions(permissions.BasePermission):
 
         profile_login = Profile.get_user_jwt(self, request)
 
-        return obj.profile_commented.id == profile_login.id     
+        return obj.profile_related.id == profile_login.id     

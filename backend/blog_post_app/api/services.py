@@ -8,4 +8,6 @@ def add_profile(self,serializer):
             instance=serializer.save(profile_related=profile_login)
             return instance 
         except:
-            raise ValidationError({"detail":"login problem"})    
+            raise ValidationError({"detail":"login problem"}) 
+        
+     

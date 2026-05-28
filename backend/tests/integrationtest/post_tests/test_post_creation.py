@@ -10,7 +10,7 @@ def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
     return str(refresh.access_token)
 
-
+# SUCCESS TESTS
 @pytest.mark.django_db
 def test_post_creation_with_jwt_auth():
     
@@ -47,7 +47,7 @@ this test covers
 - response generation
 """
 
-
+# AUTH TESTS
 @pytest.mark.django_db
 def test_post_creation_without_login():
     client=APIClient()
@@ -68,6 +68,7 @@ def test_post_creation_invalid_token():
     assert Post.objects.count() == 0
 
 
+# VALIDATION TESTS
 @pytest.mark.django_db
 def test_post_creation_with_missing_data():
     

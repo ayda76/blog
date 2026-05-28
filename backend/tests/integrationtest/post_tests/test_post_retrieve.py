@@ -2,7 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 from tests.factories_post import PostFactory
 
-
+# SUCCESS TESTS
 @pytest.mark.django_db
 def test_post_retrieve():
     
