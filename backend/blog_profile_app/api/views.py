@@ -25,7 +25,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         profile_instance=serializer.save()
         profile_instance.user=user
         profile_instance.save()
-        return Response(profile_instance)
+        return profile_instance
 
 
 # Helper function to generate JWT token
